@@ -12,3 +12,7 @@ class Tile(ABC):
         self.color = color
         self.x = x
         self.y = y
+
+    @abstractmethod
+    def step_on(self):
+        pass

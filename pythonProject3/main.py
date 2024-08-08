@@ -7,7 +7,7 @@ from pygame.time import get_ticks
 
 from Directions import Directions
 from World import World
-from tiles import TILES
+from tiles import TILES, LeftRightTile
 
 """
 All PyGame stuff is here (rendering & inputs)
@@ -98,9 +98,22 @@ def get_mouse_world_position(world: World) -> Tuple[int, int]:
     mouse_y = clamp(int((mouse_pos[1] / window_size[1]) * world.height), 0, world.height - 1)
     return mouse_x, mouse_y
 
+def generate_map(world):
+    world.add_tile(LeftRightTile, 0, 0)
+    world.add_tile(LeftRightTile, 0, 1)
+    world.add_tile(LeftRightTile, 0, 2)
+    world.add_tile(LeftRightTile, 0, 3)
+    world.add_tile(LeftRightTile, 0, 4)
+    world.add_tile(LeftRightTile, 0, 5)
+    world.add_tile(LeftRightTile, 0, 6)
+    world.add_tile(LeftRightTile, 0, 7)
+    world.add_tile(LeftRightTile, 0, 8)
+    world.add_tile(LeftRightTile, 0, 9)
 
 def main():
     world = World(15, 10)
+    generate_map(world)
+
     selected_tile: int = 0
     pause: bool = False
     tiles_info: bool = False
@@ -137,6 +150,10 @@ def main():
                     world = World(15, 10)
         if pygame.mouse.get_pressed()[0]:
             world.add_tile(TILES[selected_tile], mouse_position[0], mouse_position[1])
+        if pygame.mouse.get_pressed()[2]:
+            tile = world.get_tile_at_position(mouse_position[0], mouse_position[1])
+            if tile:
+                tile.step_on()
 
 
         # update physics

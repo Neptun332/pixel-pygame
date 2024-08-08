@@ -35,3 +35,6 @@ class LeftRightTile(MovingTile):
         temp = self.current_direction
         self.current_direction = self.next_direction
         self.next_direction = temp
+
+    def step_on(self):
+        print("GameOver")
