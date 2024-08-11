@@ -1,4 +1,5 @@
 from Directions import Directions
+from GameOver import GameOver
 from tiles.MovingTile import MovingTile
 from utils.semirandom import randint
 
@@ -14,7 +15,7 @@ class LeftRightTile(MovingTile):
             x=x,
             y=y,
             world=world,
-            velocity=velocity
+            velocity=velocity,
         )
         self.current_direction = Directions.LEFT
         self.next_direction = Directions.RIGHT
@@ -36,5 +37,7 @@ class LeftRightTile(MovingTile):
         self.current_direction = self.next_direction
         self.next_direction = temp
 
-    def step_on(self):
+    def step_on(self, event_broker):
         print("GameOver")
+        event = GameOver()
+        event_broker.publish_event(event)

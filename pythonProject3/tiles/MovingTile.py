@@ -2,6 +2,7 @@ import abc
 from typing import Tuple, List, Optional
 
 from Directions import Directions
+from EventBroker import EventBroker
 from tiles.TIle import Tile
 
 

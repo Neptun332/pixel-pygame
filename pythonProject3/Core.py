@@ -3,16 +3,17 @@ import sys
 import pygame
 from pygame import QUIT, MOUSEWHEEL, KEYDOWN
 
-from World import World
 from tiles import LeftRightTile
 
 
 class Core:
 
-    def __init__(self, display, world, tiles):
+    def __init__(self, display, world, tiles, stop_token, event_broker):
         self.display = display
         self.world = world
         self.tiles = tiles
+        self.stop_token = stop_token
+        self.event_broker = event_broker
         self.selected_tile: int = 0
         self.pause: bool = False
         self.tiles_info: bool = False
@@ -23,7 +24,7 @@ class Core:
         self.run_game_loop()
 
     def run_game_loop(self):
-        while True:
+        while not self.stop_token:
             # Get mouse position
             mouse_position = self.display.get_mouse_world_position(self.world)
             # Get inputs
@@ -51,7 +52,7 @@ class Core:
             if pygame.mouse.get_pressed()[0]:
                 tile = self.world.get_tile_at_position(mouse_position[0], mouse_position[1])
                 if tile:
-                    tile.step_on()
+                    tile.step_on(self.event_broker)
 
             # update physics
             self.world.update()
